@@ -19,7 +19,7 @@ namespace GreetingKata
             return $"Hello, {name}.";
         }
 
-        public string Greet(string[] names)
+        public string GreetMultiple(string[] names)
         {
             if (names.Length == 2)
             {
