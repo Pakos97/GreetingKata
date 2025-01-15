@@ -27,16 +27,30 @@ namespace GreetingKata
                 return "Hello, my friend.";
             }
 
-            if (names.Length == 2)
+            // Separare i nomi normali e urlati
+            var normalNames = names.Where(name => name.ToUpper() != name).ToArray();
+            var shoutedNames = names.Where(name => name.ToUpper() == name).ToArray();
+
+            string normalGreeting = null;
+            if (normalNames.Length > 0)
             {
-                return $"Hello, {names[0]} and {names[1]}.";
+                var allButLast = string.Join(", ", normalNames.Take(normalNames.Length - 1));
+                var last = normalNames.Length > 1 ? $" and {normalNames.Last()}" : normalNames.First();
+                normalGreeting = $"Hello, {allButLast}{last}.";
             }
 
-            // Join all names except the last with commas
-            var allButLast = string.Join(", ", names.Take(names.Length - 1));
-            var last = names.Last();
+            string shoutedGreeting = null;
+            if (shoutedNames.Length > 0)
+            {
+                shoutedGreeting = $"AND HELLO {string.Join(" AND ", shoutedNames)}!";
+            }
 
-            return $"Hello, {allButLast}, and {last}.";
+            if (!string.IsNullOrEmpty(normalGreeting) && !string.IsNullOrEmpty(shoutedGreeting))
+            {
+                return $"{normalGreeting} {shoutedGreeting}";
+            }
+
+            return normalGreeting ?? shoutedGreeting;
         }
     }
 }
