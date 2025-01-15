@@ -27,6 +27,9 @@ jobs:
     - name: Pack the project
       run: dotnet pack GreetingKata/GreetingKata.csproj --configuration Release --output ./Greeting/bin/Release/
 
+    - name: Execute pack
+      run: dotnet pack --configuration Release /p:PackageVersion=1.0.${{ github.run_number }}
+
     - name: Add GitHub NuGet source
       run: |
         dotnet nuget add source \
