@@ -9,6 +9,11 @@
                 return "Hello, my friend.";
             }
 
+            if (name.ToUpper() == name)
+            {
+                return $"HELLO {name}!";
+            }
+
             return $"Hello, {name}.";
         }
     }
