@@ -1,27 +1,44 @@
-name: Build and Test
+name: Execute push
 
 on:
   push:
     branches:
-      - '**' 
+      - main
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '8.0.x' 
-      - name: Restore dependencies
-        run: dotnet restore
+    - name: Set up .NET SDK
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.x'
 
-      - name: Build solution
-        run: dotnet build GreetingKata.sln --no-restore --configuration Release
+    - name: Restore dependencies
+      run: dotnet restore GreetingKata.sln
 
-      - name: Run tests
-        run: dotnet test GreetingKata.sln --no-build --configuration Release --verbosity normal
+    - name: Build project
+      run: dotnet build GreetingKata.sln --configuration Release
+
+    - name: Pack the project
+      run: dotnet pack GreetingKata/GreetingKata.csproj --configuration Release --output ./Greeting/bin/Release/
+
+    - name: Add GitHub NuGet source
+      run: |
+        dotnet nuget add source \
+          --username AnErrorHasOccured \
+          --password ${{ secrets.PAKOSTOKEN }} \
+          --store-password-in-clear-text \
+          --name github "https://nuget.pkg.github.com/Pakos97/index.json"
+
+    - name: Push NuGet package
+      run: |
+        dotnet nuget push "Greeting/bin/Release/Greeting.1.0.${{ github.run_number }}.nupkg" \
+          --api-key ${{ secrets.PAKOSTOKEN }} \
+          --source "github"
+      env:
+        TOKEN: ${{ secrets.PAKOSTOKEN }}
