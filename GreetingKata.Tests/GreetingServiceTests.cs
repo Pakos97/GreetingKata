@@ -4,7 +4,15 @@ public class GreetingServiceTests
     public void Greet_ReturnsHelloMyFriend_WhenNameIsNull()
     {
         var service = new GreetingService();
-        var result = service.GreetMultiple(new string[] { null });
+        var result = service.GreetMultiple(null); // Test con null
+        Assert.Equal("Hello, my friend.", result);
+    }
+
+    [Fact]
+    public void Greet_ReturnsHelloMyFriend_WhenNamesIsEmpty()
+    {
+        var service = new GreetingService();
+        var result = service.GreetMultiple(new string[] { }); // Test con array vuoto
         Assert.Equal("Hello, my friend.", result);
     }
 

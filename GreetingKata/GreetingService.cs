@@ -9,8 +9,14 @@
 
         var allNames = new List<string>();
 
+        // Gestiamo i casi dove il nome potrebbe essere null
         foreach (var name in names)
         {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                continue; // Se il nome è null o vuoto, lo ignoriamo
+            }
+
             if (name.Contains("\""))
             {
                 var nameWithoutQuotes = name.Trim('"');
