@@ -1,4 +1,6 @@
-﻿namespace GreetingKata
+﻿using System;
+
+namespace GreetingKata
 {
     public class GreetingService
     {
@@ -15,6 +17,16 @@
             }
 
             return $"Hello, {name}.";
+        }
+
+        public string Greet(string[] names)
+        {
+            if (names.Length == 2)
+            {
+                return $"Hello, {names[0]} and {names[1]}.";
+            }
+
+            throw new NotImplementedException("Greet for more than 2 names is not implemented yet.");
         }
     }
 }
