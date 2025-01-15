@@ -45,7 +45,7 @@ public class GreetingServiceTests
     {
         var service = new GreetingService();
         var result = service.GreetMultiple(new string[] { "Amy", "BRIAN", "Charlotte" });
-        Assert.Equal("Hello, Amy and Charlotte. AND HELLO BRIAN!", result);
+        Assert.Equal("Hello, Amy and Charlotte. HELLO BRIAN!", result);
     }
 
     [Fact]

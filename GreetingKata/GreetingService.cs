@@ -52,7 +52,7 @@
         string shoutedGreeting = null;
         if (shoutedNames.Length > 0)
         {
-            shoutedGreeting = $"AND HELLO {string.Join(" AND ", shoutedNames)}!";
+            shoutedGreeting = $"HELLO {string.Join(" AND ", shoutedNames)}!";
         }
 
         if (!string.IsNullOrEmpty(normalGreeting) && !string.IsNullOrEmpty(shoutedGreeting))
