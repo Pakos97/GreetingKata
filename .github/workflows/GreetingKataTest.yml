@@ -30,7 +30,7 @@ jobs:
     - name: Add GitHub NuGet source
       run: |
         dotnet nuget add source \
-          --username AnErrorHasOccured \
+          --username Pakos97 \
           --password ${{ secrets.PAKOSTOKEN }} \
           --store-password-in-clear-text \
           --name github "https://nuget.pkg.github.com/Pakos97/index.json"
