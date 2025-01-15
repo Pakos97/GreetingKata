@@ -1,43 +1,63 @@
-﻿public string GreetMultiple(string[] names)
+﻿namespace GreetingKata
 {
-    if (names.Length == 0)
+    public class GreetingService
     {
-        return "Hello, my friend.";
-    }
-
-    // Separare i nomi normali e urlati
-    var normalNames = names.Where(name => name.ToUpper() != name).ToArray();
-    var shoutedNames = names.Where(name => name.ToUpper() == name).ToArray();
-
-    string normalGreeting = null;
-    if (normalNames.Length > 0)
-    {
-        if (normalNames.Length == 1)
+        public string Greet(string name)
         {
-            normalGreeting = $"Hello, {normalNames[0]}.";
+            if (string.IsNullOrEmpty(name))
+            {
+                return "Hello, my friend.";
+            }
+            else if (name.ToUpper() == name)
+            {
+                return $"HELLO {name}!";
+            }
+
+            return $"Hello, {name}.";
         }
-        else if (normalNames.Length == 2)
+
+        public string GreetMultiple(string[] names)
         {
-            normalGreeting = $"Hello, {normalNames[0]} and {normalNames[1]}.";
+            if (names.Length == 0)
+            {
+                return "Hello, my friend.";
+            }
+
+            // Separare i nomi normali e urlati
+            var normalNames = names.Where(name => name.ToUpper() != name).ToArray();
+            var shoutedNames = names.Where(name => name.ToUpper() == name).ToArray();
+
+            string normalGreeting = null;
+            if (normalNames.Length > 0)
+            {
+                if (normalNames.Length == 1)
+                {
+                    normalGreeting = $"Hello, {normalNames[0]}.";
+                }
+                else if (normalNames.Length == 2)
+                {
+                    normalGreeting = $"Hello, {normalNames[0]} and {normalNames[1]}.";
+                }
+                else
+                {
+                    var allButLast = string.Join(", ", normalNames.Take(normalNames.Length - 1));
+                    var last = normalNames.Last();
+                    normalGreeting = $"Hello, {allButLast}, and {last}.";
+                }
+            }
+
+            string shoutedGreeting = null;
+            if (shoutedNames.Length > 0)
+            {
+                shoutedGreeting = $"AND HELLO {string.Join(" AND ", shoutedNames)}!";
+            }
+
+            if (!string.IsNullOrEmpty(normalGreeting) && !string.IsNullOrEmpty(shoutedGreeting))
+            {
+                return $"{normalGreeting} {shoutedGreeting}";
+            }
+
+            return normalGreeting ?? shoutedGreeting;
         }
-        else
-        {
-            var allButLast = string.Join(", ", normalNames.Take(normalNames.Length - 1));
-            var last = normalNames.Last();
-            normalGreeting = $"Hello, {allButLast}, and {last}.";
-        }
     }
-
-    string shoutedGreeting = null;
-    if (shoutedNames.Length > 0)
-    {
-        shoutedGreeting = $"AND HELLO {string.Join(" AND ", shoutedNames)}!";
-    }
-
-    if (!string.IsNullOrEmpty(normalGreeting) && !string.IsNullOrEmpty(shoutedGreeting))
-    {
-        return $"{normalGreeting} {shoutedGreeting}";
-    }
-
-    return normalGreeting ?? shoutedGreeting;
 }
