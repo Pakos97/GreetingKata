@@ -83,5 +83,19 @@ namespace GreetingKata.Tests
             // Assert
             Assert.Equal("Hello, Amy and Charlotte. AND HELLO BRIAN!", result);
         }
+
+        [Fact]
+        public void GreetMultiple_ReturnsHelloWithCommaSeparatedNames()
+        {
+            // Arrange
+            var service = new GreetingService();
+
+            // Act
+            var result = service.GreetMultiple(new string[] { "Bob", "Charlie, Dianne" });
+
+            // Assert
+            Assert.Equal("Hello, Bob, Charlie, and Dianne.", result);
+        }
+
     }
 }

@@ -18,14 +18,26 @@
 
         public string GreetMultiple(string[] names)
         {
-            if (names.Length == 0)
+            // Unire i nomi separati da virgola e dividerli correttamente
+            var allNames = new List<string>();
+
+            foreach (var name in names)
             {
-                return "Hello, my friend.";
+                // Se il nome contiene una virgola, separa il nome in più voci
+                if (name.Contains(","))
+                {
+                    var splitNames = name.Split(',').Select(n => n.Trim()).ToArray();
+                    allNames.AddRange(splitNames);
+                }
+                else
+                {
+                    allNames.Add(name);
+                }
             }
 
             // Separare i nomi normali e urlati
-            var normalNames = names.Where(name => name.ToUpper() != name).ToArray();
-            var shoutedNames = names.Where(name => name.ToUpper() == name).ToArray();
+            var normalNames = allNames.Where(name => name.ToUpper() != name).ToArray();
+            var shoutedNames = allNames.Where(name => name.ToUpper() == name).ToArray();
 
             string normalGreeting = null;
             if (normalNames.Length > 0)
@@ -59,5 +71,6 @@
 
             return normalGreeting ?? shoutedGreeting;
         }
+
     }
 }
